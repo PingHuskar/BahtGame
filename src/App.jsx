@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import * as br from "bahtrext"
+import { OB } from "bahtrext"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -15,14 +15,14 @@ function App() {
     }).join("");
     const randomNumber = parseInt(randomNumber2);
     setQA({
-      q: br.OB(randomNumber).txt,
-      a: br.OB(randomNumber).val,
+      q: OB(randomNumber).txt,
+      a: OB(randomNumber).val,
     })
   }, [score])
   
   return (
     <>
-      <h1>BahtGame v1.0.0</h1>
+      <h1>BahtGame v1.0.1</h1>
       <h3>Score: {score}</h3>
       <div className="">
         <h2>{qa.q}</h2>
@@ -34,7 +34,7 @@ function App() {
           value={inputAns}
           onInput={(e) => {
             e.preventDefault();
-            setInputAns(e.currentTarget.value);
+            setInputAns(e.currentTarget.value.replace(/[^\d]/g,''));
           }}
         />
       </div>
@@ -43,7 +43,7 @@ function App() {
         style={{marginTop: `10px`, outline: `1px solid black`}}
         onClick={(e) => {
           e.preventDefault()
-          if (br.OB(inputAns).txt == qa.q) {
+          if (OB(inputAns).txt == qa.q) {
             // alert(`true`)
             toast.success("Wow so easy!");
             setScore((s) => s + 1);
